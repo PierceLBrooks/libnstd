@@ -75,6 +75,9 @@ target_link_libraries(nstd PUBLIC
     Threads::Threads
 )
 if(MINGW)
+    target_include_directories(nstd PUBLIC
+        ${TERMIWIN_INCLUDE_DIR}
+    )
     target_link_libraries(nstd PUBLIC
         ${TERMIWIN_LIBRARY}
     )
