@@ -81,6 +81,9 @@ if(MINGW)
     target_link_libraries(nstd PUBLIC
         ${TERMIWIN_LIBRARY}
     )
+    target_compile_definitions(nstd PRIVATE
+        TERMIWIN_DONOTREDEFINE
+    )
 endif()
 if(MSVC)
     target_compile_definitions(nstd PRIVATE

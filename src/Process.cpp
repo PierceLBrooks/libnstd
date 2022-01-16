@@ -856,6 +856,7 @@ ssize Process::write(const void* buffer, usize len)
 
 String Process::getEnvironmentVariable(const String& name, const String& defaultValue)
 {
+#ifndef __MINGW32__
 #ifdef _MSC_VER
   String buffer;
   DWORD bufferSize = 256;
@@ -883,16 +884,23 @@ String Process::getEnvironmentVariable(const String& name, const String& default
     return defaultValue;
   return String(var, String::length(var));
 #endif
+#else
+  return String();
+#endif
 }
 
 bool Process::setEnvironmentVariable(const String& name, const String& value)
 {
+#ifndef __MINGW32__
 #ifdef _MSC_VER
   return SetEnvironmentVariable((const tchar*)name, value.isEmpty() ? 0 : (const tchar*)value) == TRUE;
 #else
   if(value.isEmpty())
     return unsetenv((const tchar*)name);
   return setenv((const tchar*)name, (const tchar*)value, 1) == 0;
+#endif
+#else
+  return false;
 #endif
 }
 

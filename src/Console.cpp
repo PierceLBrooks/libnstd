@@ -157,6 +157,7 @@ public:
 
   Private() : valid(false)
   {
+#ifndef __MINGW32__
 #ifdef _MSC_VER
     if(!GetConsoleMode(GetStdHandle(STD_OUTPUT_HANDLE), &consoleOutputMode) ||
        !GetConsoleMode(GetStdHandle(STD_INPUT_HANDLE), &consoleInputMode))
@@ -273,6 +274,7 @@ public:
 
     // get screen width
     stdoutScreenWidth = getScreenWidth();
+#endif
   }
 
   ~Private()
@@ -299,7 +301,9 @@ public:
 #else
     if(resizeEventFd)
     {
+#ifndef __MINGW32__
       signal(SIGWINCH, SIG_IGN);
+#endif
       close(resizeEventFd);
 #ifdef __CYGWIN__
       close(resizeEventFdWrite);
@@ -323,6 +327,7 @@ public:
 
   usize getScreenWidth()
   {
+#ifndef __MINGW32__
 #ifdef _MSC_VER
     CONSOLE_SCREEN_BUFFER_INFO csbi;
     VERIFY(GetConsoleScreenBufferInfo(hOriginalStdOut, &csbi));
@@ -346,6 +351,9 @@ public:
         return 80;
     }
     return newX + 1;
+#endif
+#else
+    return 0;
 #endif
   }
 
