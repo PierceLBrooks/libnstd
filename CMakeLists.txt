@@ -2,6 +2,8 @@ cmake_minimum_required(VERSION 3.1)
 
 project(libnstd)
 
+set(CMAKE_MODULE_PATH "${CMAKE_SOURCE_DIR}/cmake/modules")
+
 if(MSVC)
     option(UNICODE "Build with unicode character set" OFF)
 endif()

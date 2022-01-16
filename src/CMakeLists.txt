@@ -1,5 +1,8 @@
 
 find_package(Threads)
+if(MINGW)
+    find_package(TermiWin)
+endif()
 
 set(sources
     Callback.cpp
@@ -71,6 +74,11 @@ target_include_directories(nstd PUBLIC
 target_link_libraries(nstd PUBLIC
     Threads::Threads
 )
+if(MINGW)
+    target_link_libraries(nstd PUBLIC
+        ${TERMIWIN_LIBRARY}
+    )
+endif()
 if(MSVC)
     target_compile_definitions(nstd PRIVATE
         _CRT_SECURE_NO_WARNINGS

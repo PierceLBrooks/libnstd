@@ -12,12 +12,22 @@
 #else
 #include <unistd.h>
 #ifndef __CYGWIN__
+#ifndef __MINGW32__
 #include <sys/eventfd.h>
+#else
+#define WIN32_LEAN_AND_MEAN
+#include <Windows.h>
+#include <io.h>
+#include <fcntl.h>
+#include <winsock2.h>
+#endif
 #endif
 #include <fcntl.h>
 #include <pthread.h>
 #include <termios.h>
+#ifndef __MINGW32__
 #include <sys/ioctl.h>
+#endif
 #include <cstring>
 #include <cctype>
 #include <cstdlib>
