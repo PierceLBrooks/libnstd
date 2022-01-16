@@ -79,7 +79,7 @@ if(MINGW)
         ${TERMIWIN_INCLUDE_DIR}
     )
     target_link_libraries(nstd PUBLIC
-        ${TERMIWIN_LIBRARY}
+        ${TERMIWIN_LIBRARY} wsock32 ws2_32
     )
     target_compile_definitions(nstd PRIVATE
         TERMIWIN_DONOTREDEFINE
